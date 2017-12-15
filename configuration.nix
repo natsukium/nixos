@@ -14,8 +14,18 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # NVIDIA GPU
+  hardware = {
+    bumblebee = {
+      enable = true;
+      driver = "nvidia";
+      group = "video";
+    };
+    opengl.driSupport32Bit = true;
+  };
+
   networking = {
-    hostName = "nm"; # Define your hostname.
+    hostName = "nix"; # Define your hostname.
     networkmanager.enable = true;
   };
 
@@ -24,6 +34,12 @@
     consoleFont = "Lat2-Terminus16";
     consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
+    inputMethod ={
+      enabled = "fcitx";
+      fcitx.engines = with pkgs; [
+        fcitx-engines.mozc
+      ];
+    };
   };
 
   # Set your time zone.
@@ -33,7 +49,11 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     # Core
-    fish vim tmux git wget xsel chromium networkmanager gcc
+    fish vim tmux git wget curl xsel chromium networkmanager gcc nox 
+    xorg.xmodmap fzf
+
+    # Network
+    openssh
 
     # Python
     python3 python36Packages.pip
@@ -46,6 +66,12 @@
     haskellPackages.xmobar
     haskellPackages.xmonad-contrib
     haskellPackages.xmonad-extras
+
+    # Others
+    ranger w3m lynx
+
+    # For NVIDIA GPU
+    bumblebee
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -63,35 +89,38 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable the XMonad Desktop Environment.
   services.xserver = {
     enable = true;  # Enable the X11 windowing system.
     layout = "us";
     xkbOptions = "eurosign:e";
-    libinput.enable = true;  # Enable touchpad support.
+    # libinput.enable = true;  # Enable touchpad support.
+    # Enable touchpad support
+    synaptics = {
+      enable = true;
+      twoFingerScroll = true;
+    };
+    # Enable Xmonad
     windowManager.xmonad.enable = true;
     windowManager.default = "xmonad";
     desktopManager.xterm.enable = false;
     desktopManager.default = "none";
-    displayManager = {
-      slim = {
-        enable = true;
-        defaultUser = "miz";
-      };
-    };
+    displayManager.sddm.enable = true;
+    videoDrivers = [ "intel" ];
   };
+
+  nixpkgs.config.allowUnfree = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.miz = {
     isNormalUser = true;
     createHome = true;
     home = "/home/miz";
-    extraGroups = ["wheel" "networkmanager" "audio"];
+    extraGroups = ["wheel" "networkmanager" "audio" "video"];
     uid = 1000;
   };
 
