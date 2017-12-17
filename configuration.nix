@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./pkg.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -44,35 +45,6 @@
 
   # Set your time zone.
   time.timeZone = "Asia/Tokyo";
-
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [
-    # Core
-    fish vim tmux git wget curl xsel chromium networkmanager gcc nox 
-    xorg.xmodmap fzf
-
-    # Network
-    openssh
-
-    # Python
-    python3 python36Packages.pip
-
-    # Editor
-    atom 
-
-    # Xmonad
-    haskellPackages.xmonad
-    haskellPackages.xmobar
-    haskellPackages.xmonad-contrib
-    haskellPackages.xmonad-extras
-
-    # Others
-    ranger w3m lynx
-
-    # For NVIDIA GPU
-    bumblebee
-  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
