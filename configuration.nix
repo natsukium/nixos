@@ -61,7 +61,7 @@
     # Editor
     atom 
 
-    # Xmhonad
+    # Xmonad
     haskellPackages.xmonad
     haskellPackages.xmobar
     haskellPackages.xmonad-contrib
