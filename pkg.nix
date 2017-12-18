@@ -3,23 +3,23 @@
 {
   environment.systemPackages = with pkgs; [
     # Core
-    fish vim tmux git wget curl xsel chromium networkmanager gcc nox
-    xorg.xmodmap fzf
+    rxvt_unicode fish vim tmux git wget curl xsel chromium networkmanager gcc
+    xorg.xmodmap fzf nox
 
     # Network
     openssh
 
     # Python
-    python3 pyhon36Packages.pip
+    python3 python36Packages.pip
 
     # Editor
-    atom
+    atom asciidoctor
 
     # Xmonad
-    haskelPackages.xmonad
-    haskelPackages.xmobar
-    haskelPackages.xmonad-contrib
-    haskelPackages.xmonad-extras
+    haskellPackages.xmonad
+    haskellPackages.xmobar
+    haskellPackages.xmonad-contrib
+    haskellPackages.xmonad-extras
 
     # Others
     ranger w3m lynx screenfetch
