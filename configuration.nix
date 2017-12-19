@@ -18,16 +18,19 @@
 
   # NVIDIA GPU
   hardware = {
+    pulseaudio.enable = true;
+
     bumblebee = {
       enable = true;
       driver = "nvidia";
       group = "video";
     };
+
     opengl.driSupport32Bit = true;
   };
 
   networking = {
-    hostName = "nix"; # Define your hostname.
+    hostName = "umbreon"; # Define your hostname.
     networkmanager.enable = true;
   };
 
@@ -88,12 +91,15 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  # Enable Docker
+  virtualisation.docker.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.miz = {
     isNormalUser = true;
     createHome = true;
     home = "/home/miz";
-    extraGroups = ["wheel" "networkmanager" "audio" "video"];
+    extraGroups = ["wheel" "networkmanager" "audio" "video" "docker"];
     uid = 1000;
   };
 
