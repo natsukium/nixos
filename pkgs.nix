@@ -2,8 +2,11 @@
 
 {
   environment.systemPackages = with pkgs; [
+    # System Core
+    networkmanager xorg.xbacklight acpi
+
     # Core
-    rxvt_unicode fish vim tmux git wget curl xsel chromium networkmanager gcc
+    rxvt_unicode fish vim tmux git wget curl xsel chromium gcc
     xorg.xmodmap fzf nox
 
     # Network
@@ -12,8 +15,8 @@
     # Python
     python3 python36Packages.pip
 
-    # Editor
-    atom asciidoctor
+    # Editor & Text
+    atom asciidoctor pandoc
 
     # Xmonad
     haskellPackages.xmonad
